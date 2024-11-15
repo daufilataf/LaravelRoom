@@ -51,7 +51,7 @@ class HomeController extends Controller
 
             $data->save();
 
-            return redirect()->back()->with('message', 'Room Booked Successfully');
+            return redirect()->back()->with('message', 'Room Booked Successfully, You will be informed when your booking will be accepted');
         }
 
     }

@@ -17,7 +17,8 @@ class Room extends Model
         'price',
         'wifi',
         'building',
-        'room_type'
+        'room_type',
+        'size',
 
     ];
 }

@@ -75,56 +75,78 @@
                             <div class="alert alert-success">
                                 <button type="button" class="close" data-bs-dismiss="alert">X</button>
                                 {{ session()->get('message') }}
-
                             </div>
                         @endif
                     </div>
 
-                    @if ($errors)
-
-                        @foreach ($errors->all() as $errors)
-                            <li style="color:red">
-                                {{ $errors }}
-                            </li>
-                        @endforeach
-                    @endif
-
-                    <form action="{{ url('add_booking', $room->id) }}" method="Post">
-
-                        @csrf
-
-                        <div>
-                            <label>Name</label>
-                            <input type="text" name="name"
-                                @if (Auth::id()) value="{{ Auth::user()->name }}"> @endif </div>
+                    @if (Auth::id())
+                        <!-- Show form when the user is authenticated -->
+                        <form action="{{ url('add_booking', $room->id) }}" method="Post">
+                            @csrf
                             <div>
-                                <label>Email</label>
-                                <input type="email" name="email"
-                                    @if (Auth::id()) value="{{ Auth::user()->email }}"> @endif </div>
+                                <label>Name*</label>
+                                <input required type="text" name="name" value="{{ Auth::user()->name }}">
+                            </div>
+                            <div>
+                                <label>Email*</label>
+                                <input required type="email" name="email" value="{{ Auth::user()->email }}">
+                            </div>
+                            <div>
+                                <label>Phone*</label>
+                                <input required type="number" name="phone" value="{{ Auth::user()->phone }}">
+                            </div>
+                            <div>
+                                <label>Start Date*</label>
+                                <input required type="date" name="startDate" id="startDate">
+                            </div>
+                            <div>
+                                <label>End Date*</label>
+                                <input required type="date" name="endDate" id="endDate">
+                            </div>
+                            <div>
+                                <label>Guest Emails</label>
+                                <textarea required name="guest" rows="3" placeholder="Enter guest emails separated by commas"></textarea>
+                            </div>
+                            <div style="padding-top: 20px">
+                                <input type="submit" class="btn btn-primary" value="Book Room">
+                            </div>
+                        </form>
+                    @else
+                        <!-- Show message and blur form when the user is not authenticated -->
+                        <div style="position: relative; opacity: 0.5; pointer-events: none;">
+                            <form>
+                                <div>
+                                    <label>Name</label>
+                                    <input type="text" disabled>
+                                </div>
+                                <div>
+                                    <label>Email</label>
+                                    <input type="email" disabled>
+                                </div>
                                 <div>
                                     <label>Phone</label>
-                                    <input type="number" name="phone"
-                                        @if (Auth::id()) value="{{ Auth::user()->phone }}"> @endif
-                                        </div>
-                                    <div>
-                                        <label>Start Date</label>
-                                        <input type="date" name="startDate" id="startDate">
-                                    </div>
-                                    <div>
-                                        <label>End Date</label>
-                                        <input type="date" name="endDate" id="endDate">
-                                    </div>
-                                    <div>
-                                        <label>Guest Emails</label>
-                                        <textarea name="guest" rows="3" placeholder="Enter guest emails separated by commas"></textarea>
-                                    </div>
-
-                                    <div style="padding-top: 20px">
-                                        <input type="submit" class="btn btn-primary" value="Book Room">
-                                    </div>
-                    </form>
-
+                                    <input type="number" disabled>
+                                </div>
+                                <div>
+                                    <label>Start Date</label>
+                                    <input type="date" disabled>
+                                </div>
+                                <div>
+                                    <label>End Date</label>
+                                    <input type="date" disabled>
+                                </div>
+                                <div>
+                                    <label>Guest Emails</label>
+                                    <textarea rows="3" placeholder="Enter guest emails separated by commas" disabled></textarea>
+                                </div>
+                            </form>
+                        </div>
+                        <div style="margin-top: 20px; color: red; font-weight: bold;">
+                            For reservation, you need to log in or register.
+                        </div>
+                    @endif
                 </div>
+
             </div>
         </div>
     </div>

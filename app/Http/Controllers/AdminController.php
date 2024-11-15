@@ -111,6 +111,7 @@ class AdminController extends Controller
         $data->wifi = $request->wifi;
         $data->room_type = $request->type;
         $data->building = $request->building;
+        $data->size = $request->size;
 
         $image = $request->image;
 
