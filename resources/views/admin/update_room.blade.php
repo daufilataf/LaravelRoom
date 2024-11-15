@@ -52,6 +52,10 @@
                             <input type="number" name="price" placeholder="Price" value="{{ $data->price }}">
                         </div>
 
+                        <div class="form_design">
+                            <label>Size</label>
+                            <input type="number" name="size" placeholder="Size" value="{{ $data->size }}">
+                        </div>
                         {{-- THEN ADD FROM DATABASE --}}
                         <div class="form_design">
                             <label>Building</label>

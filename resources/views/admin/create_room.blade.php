@@ -49,7 +49,8 @@
 
                         <div class="form_design">
                             <label>Size</label>
-                            <input type="number" name="size" placeholder="Size">
+                            <input type="number" id="size" name="size" required min="1">
+
                         </div>
 
                         {{-- THEN ADD FROM DATABASE --}}

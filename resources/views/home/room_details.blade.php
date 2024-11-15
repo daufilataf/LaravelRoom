@@ -60,7 +60,9 @@
 
                             <h4 style="padding: 12px">Free Wifi : {{ $room->wifi }}</h4>
 
-                            <h3 style="padding: 12px">Price : {{ $room->price }}</h3>
+                            <h4 style="padding: 12px">Price : {{ $room->price }}</h4>
+
+                            <h4 style="padding: 12px">Size : {{ $room->size }}</h4>
 
 
                         </div>
@@ -103,9 +105,16 @@
                                 <label>End Date*</label>
                                 <input required type="date" name="endDate" id="endDate">
                             </div>
-                            <div>
-                                <label>Guest Emails</label>
-                                <textarea required name="guest" rows="3" placeholder="Enter guest emails separated by commas"></textarea>
+                            <div class="form-group">
+                                <label for="size">Number of Guests:</label>
+                                <input type="number" id="size" name="size" class="form-control" required
+                                    min="1">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="guest">Guest Emails (comma-separated):</label>
+                                <input type="text" id="guest" name="guest" class="form-control" required
+                                    placeholder="email1@example.com, email2@example.com">
                             </div>
                             <div style="padding-top: 20px">
                                 <input type="submit" class="btn btn-primary" value="Book Room">
