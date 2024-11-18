@@ -28,11 +28,9 @@
                         <tr>
                             <td>{{ $reservation->room->room_title }}</td>
                             <td>{{ $reservation->start_date->format('Y-m-d H:i') }}</td>
-                            <td> {{ $reservation->end_date->format('Y-m-d H:i') }}</td>
+                            <td>{{ $reservation->end_date->format('Y-m-d H:i') }}</td>
                             <td>{{ ucfirst($reservation->status) }}</td>
                             <td>
-
-
                                 @if ($reservation->is_cancellable)
                                     <form action="{{ url('cancel_reservation', $reservation->id) }}" method="POST">
                                         @csrf
@@ -44,8 +42,12 @@
                                     </p>
                                 @endif
                             </td>
+                            <td>
+                                <a href="{{ route('reservation.details', $reservation->id) }}"
+                                    class="btn btn-primary">Details</a>
+                            </td>
+                        </tr>
                     @endforeach
-
                 </tbody>
             </table>
         @endif

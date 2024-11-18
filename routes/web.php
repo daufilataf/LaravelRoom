@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 
 use App\Http\Controllers\HomeController;
 
+
 route::get("/", [AdminController::class, "home"]);
 
 route::get('/home', [AdminController::class, 'index'])->name('home');
@@ -48,3 +49,4 @@ Route::middleware(['auth'])->group(function () {
 
 
 Route::delete('/cancel_reservation/{id}', [HomeController::class, 'cancelReservation'])->name('cancel_reservation');
+
