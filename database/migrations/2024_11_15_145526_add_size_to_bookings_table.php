@@ -11,7 +11,7 @@ return new class extends Migration {
     public function up()
     {
         Schema::table('bookings', function (Blueprint $table) {
-            $table->integer('size')->after('guest_list_emails');
+            $table->integer('size')->after('guest_list_emails'); // Adjust position if needed
         });
     }
 

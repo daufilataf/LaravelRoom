@@ -98,12 +98,12 @@
                                 <input required type="number" name="phone" value="{{ Auth::user()->phone }}">
                             </div>
                             <div>
-                                <label>Start Date*</label>
-                                <input required type="date" name="startDate" id="startDate">
+                                <label>Start Date and Time*</label>
+                                <input required type="datetime-local" name="startDate" id="startDate">
                             </div>
                             <div>
-                                <label>End Date*</label>
-                                <input required type="date" name="endDate" id="endDate">
+                                <label>End Date and Time*</label>
+                                <input required type="datetime-local" name="endDate" id="endDate">
                             </div>
                             <div class="form-group">
                                 <label for="size">Number of Guests:</label>
@@ -167,17 +167,18 @@
         $(function() {
             var dtToday = new Date();
 
+            var year = dtToday.getFullYear();
             var month = dtToday.getMonth() + 1;
             var day = dtToday.getDate();
-            var year = dtToday.getFullYear();
+            var hours = dtToday.getHours();
+            var minutes = dtToday.getMinutes();
 
-            if (month < 10)
-                month = '0' + month.toString();
+            if (month < 10) month = '0' + month.toString();
+            if (day < 10) day = '0' + day.toString();
+            if (hours < 10) hours = '0' + hours.toString();
+            if (minutes < 10) minutes = '0' + minutes.toString();
 
-            if (day < 10)
-                day = '0' + day.toString();
-
-            var maxDate = year + '-' + month + '-' + day;
+            var maxDate = `${year}-${month}-${day}T${hours}:${minutes}`;
             $('#startDate').attr('min', maxDate);
             $('#endDate').attr('min', maxDate);
 
@@ -188,6 +189,7 @@
             });
         });
     </script>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
         integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous">

@@ -42,3 +42,7 @@ route::post("/upload_gallery", action: [AdminController::class, "upload_gallery"
 
 route::get("/delete_gallery/{id}", action: [AdminController::class, "delete_gallery"]);
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/my_reservations', [HomeController::class, 'myReservations'])->name('my_reservations');
+    Route::post('/cancel_reservation/{id}', [HomeController::class, 'cancelReservation'])->name('cancel_reservation');
+});

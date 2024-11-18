@@ -11,14 +11,16 @@ return new class extends Migration {
     public function up()
     {
         Schema::table('bookings', function (Blueprint $table) {
-            $table->integer('size')->after('guest_list_emails');
+            $table->dateTime('start_date')->change();
+            $table->dateTime('end_date')->change();
         });
     }
 
     public function down()
     {
         Schema::table('bookings', function (Blueprint $table) {
-            $table->dropColumn('size');
+            $table->date('start_date')->change();
+            $table->date('end_date')->change();
         });
     }
 };
