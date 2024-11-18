@@ -52,6 +52,9 @@ class HomeController extends Controller
             return redirect()->back()->with('message', 'The number of guest emails exceeds the room capacity.');
         }
 
+
+
+
         $data = new Booking;
         $data->room_id = $id;
         $data->name = $request->name;
@@ -79,10 +82,22 @@ class HomeController extends Controller
     {
         $reservations = Booking::where('email', Auth::user()->email)->get();
 
+        foreach ($reservations as $reservation) {
+            $currentTime = Carbon::now()->setTimezone(config('app.timezone')); // Use app timezone
+            $parsedStartDate = Carbon::parse($reservation->start_date)->setTimezone(config('app.timezone')); // Ensure consistent timezone
+
+            $hoursDifference = $currentTime->diffInHours($parsedStartDate, false);
+
+        }
+
+
         return view('home.my_reservations', compact('reservations'));
     }
 
-    public function cancelReservation(Request $request, $id)
+
+
+
+    public function cancelReservation($id)
     {
         $booking = Booking::find($id);
 
@@ -94,17 +109,22 @@ class HomeController extends Controller
             return redirect()->back()->with('message', 'You are not authorized to cancel this reservation.');
         }
 
-        $currentDate = Carbon::now();
-        $startDate = Carbon::parse($booking->start_date);
+        $currentTime = Carbon::now('UTC');
+        $startTime = Carbon::parse($booking->start_date, 'UTC');
 
-        if ($startDate->diffInDays($currentDate) < 1) {
-            return redirect()->back()->with('message', 'You cannot cancel a reservation with less than 1 day remaining.');
+        $hoursDifference = $currentTime->diffInHours($startTime, false);
+
+
+
+        if ($hoursDifference < 24) {
+            return redirect()->back()->with('message', 'You cannot cancel this reservation (less than 24 hours remaining).');
         }
 
         $booking->delete();
 
         return redirect()->back()->with('message', 'Reservation canceled successfully.');
     }
+
 
 }
 

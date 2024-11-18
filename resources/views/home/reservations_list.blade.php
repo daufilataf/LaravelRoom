@@ -27,21 +27,25 @@
                     @foreach ($reservations as $reservation)
                         <tr>
                             <td>{{ $reservation->room->room_title }}</td>
-                            <td>{{ $reservation->start_date }}</td>
-                            <td>{{ $reservation->end_date }}</td>
+                            <td>{{ $reservation->start_date->format('Y-m-d H:i') }}</td>
+                            <td> {{ $reservation->end_date->format('Y-m-d H:i') }}</td>
                             <td>{{ ucfirst($reservation->status) }}</td>
                             <td>
-                                @if (Carbon\Carbon::parse($reservation->start_date)->diffInDays(Carbon\Carbon::now()) >= 1)
-                                    <form action="{{ route('cancel_reservation', $reservation->id) }}" method="POST">
+
+
+                                @if ($reservation->is_cancellable)
+                                    <form action="{{ url('cancel_reservation', $reservation->id) }}" method="POST">
                                         @csrf
-                                        <button type="submit" class="btn btn-danger">Cancel</button>
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger">Cancel Reservation</button>
                                     </form>
                                 @else
-                                    <span class="text-muted">Cannot cancel</span>
+                                    <p style="color: red;">You cannot cancel this reservation (less than 24 hours remaining).
+                                    </p>
                                 @endif
                             </td>
-                        </tr>
                     @endforeach
+
                 </tbody>
             </table>
         @endif

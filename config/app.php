@@ -117,6 +117,8 @@ return [
     | Supported drivers: "file", "cache"
     |
     */
+    'timezone' => 'UTC',
+
 
     'maintenance' => [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),

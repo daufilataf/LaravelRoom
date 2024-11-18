@@ -59,7 +59,7 @@
                                 <td>{{ $data->name }}</td>
                                 <td>{{ $data->email }}</td>
                                 <td>{{ $data->phone }}</td>
-                                <td>{{ $data->guest_list_emails }}</td>
+                                <td>{{ implode(', ', $data->guest_list_emails) }}</td>
                                 <td>{{ $data->start_date }}</td>
                                 <td>{{ $data->end_date }}</td>
                                 <td>

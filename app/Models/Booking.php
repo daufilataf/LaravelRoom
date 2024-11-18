@@ -3,9 +3,20 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Booking extends Model
 {
+    public function getIsCancellableAttribute()
+    {
+        $currentTime = Carbon::now('UTC');
+        $startTime = Carbon::parse($this->start_date, 'UTC');
+
+        $hoursDifference = $currentTime->diffInHours($startTime, false);
+
+        return $hoursDifference >= 24;
+    }
+
     protected $fillable = [
         'room_id',
         'name',
@@ -15,18 +26,17 @@ class Booking extends Model
         'start_date',
         'end_date',
         'size',
-
     ];
+
+    protected $casts = [
+        'start_date' => 'datetime',
+        'end_date' => 'datetime',
+        'guest_list_emails' => 'array',
+    ];
+
 
     public function room()
     {
-        return $this->hasOne('App\Models\Room', 'id', 'room_id');
         return $this->belongsTo(Room::class, 'room_id');
-
-
     }
-
-
-
-
 }
