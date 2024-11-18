@@ -21,6 +21,7 @@
                         <th>End Date</th>
                         <th>Status</th>
                         <th>Action</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -43,8 +44,26 @@
                                 @endif
                             </td>
                             <td>
-                                <a href="{{ route('reservation.details', $reservation->id) }}"
-                                    class="btn btn-primary">Details</a>
+                                <button class="btn btn-primary toggle-details"
+                                    data-id="{{ $reservation->id }}">Details</button>
+                            </td>
+                        </tr>
+                        <tr id="details-{{ $reservation->id }}" style="display: none;">
+                            <td colspan="6">
+                                <div class="reservation-details">
+                                    <p><strong>Start Date:</strong> {{ $reservation->start_date->format('Y-m-d H:i') }}</p>
+                                    <p><strong>End Date:</strong> {{ $reservation->end_date->format('Y-m-d H:i') }}</p>
+                                    <p><strong>Status:</strong> {{ ucfirst($reservation->status) }}</p>
+                                    <p><strong>Guest Emails:</strong></p>
+                                    <ul>
+                                        @foreach ($reservation->guest_list_emails as $email)
+                                            <li>{{ $email }}</li>
+                                        @endforeach
+                                    </ul>
+                                    <p><strong>Booked By:</strong> {{ $reservation->name }} ({{ $reservation->email }})
+                                    </p>
+                                    <p><strong>Phone:</strong> {{ $reservation->phone }}</p>
+                                </div>
                             </td>
                         </tr>
                     @endforeach
@@ -52,4 +71,19 @@
             </table>
         @endif
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.toggle-details').forEach(function(button) {
+                button.addEventListener('click', function() {
+                    const detailsRow = document.getElementById(`details-${this.dataset.id}`);
+                    if (detailsRow.style.display === 'none') {
+                        detailsRow.style.display = 'table-row';
+                    } else {
+                        detailsRow.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
 @endsection
